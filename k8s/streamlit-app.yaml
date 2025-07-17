@@ -13,8 +13,8 @@ spec:
         app: streamlit
     spec:
       containers:
-      - name: streamlit
-        image: streamlit-app
+      - name: streamlit-liquidity-app
+        image: streamlit-liquidity-app
         ports:
         - containerPort: 8501
 ---

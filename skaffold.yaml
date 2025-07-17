@@ -1,14 +1,21 @@
-apiVersion: skaffold/v2beta26
+apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
-  name: liquidity-sandbox
+  name: streamlit-liquidity-sandbox
 build:
   artifacts:
-    - image: streamlit-app
+    - image: streamlit-liquidity-app
       context: .
       docker:
         dockerfile: Dockerfile.streamlit
-deploy:
-  kubectl:
-    manifests:
-      - k8s/streamlit-app.yaml
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - k8s/deployment.yaml
+    - k8s/service.yaml
+portForward:
+  - resourceType: service
+    resourceName: streamlit-service
+    port: 8501
+    localPort: 8501
