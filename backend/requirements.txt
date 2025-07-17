@@ -1,0 +1,14 @@
+farm-haystack[faiss]==1.20.1
+pdfplumber
+python-multipart
+fastapi
+uvicorn[standard]
+pandas
+openpyxl
+farm-haystack[ocr,pdf]==1.20.1
+chromadb==0.4.24
+python-docx
+pandas
+fastapi
+uvicorn
+openai
