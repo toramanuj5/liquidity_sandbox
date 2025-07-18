@@ -1,0 +1,34 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY backend/ ./
+
+# Ensure pip is up to date
+RUN pip install --upgrade pip
+
+# Clean up any preinstalled conflicting packages
+RUN pip uninstall -y transformers torch numpy || true
+
+# Step 1: Install compatible numpy first
+RUN pip install --no-cache-dir "numpy<2"
+
+# Step 2: Install compatible torch + transformers versions
+RUN pip install --no-cache-dir torch==2.0.1 transformers==4.32.1
+
+# Step 3: Force install nltk explicitly (to fix transformers utils errors)
+RUN pip install --no-cache-dir nltk==3.8.1
+
+# Step 4: Install farm-haystack with required extras
+RUN pip install --no-cache-dir "farm-haystack[faiss,sql,inference]==1.21.2"
+
+# Step 5: Install FastAPI + API + ORM dependencies with explicit versions
+RUN pip install --no-cache-dir \
+    fastapi==0.95.2 \
+    "uvicorn[standard]==0.22.0" \
+    python-multipart==0.0.9 \
+    sqlalchemy==1.4.49 \
+    psycopg2-binary==2.9.9
+
+# Entrypoint to the app
+CMD ["python", "-m", "uvicorn", "haystack_ai.app.main:app", "--host", "0.0.0.0", "--port", "8000"]

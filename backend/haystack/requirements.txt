@@ -1,3 +1,0 @@
-fastapi
-uvicorn[standard]
-farm-haystack[all]

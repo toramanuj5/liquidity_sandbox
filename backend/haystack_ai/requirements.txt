@@ -1,0 +1,6 @@
+numpy<2
+torch==2.0.1
+transformers==4.32.1
+uvicorn[standard]==0.22.0
+fastapi==0.110.0
+farm-haystack[faiss,sql,inference]==1.21.2
